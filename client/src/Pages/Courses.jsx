@@ -35,7 +35,7 @@ export const coursesJson = [
     id: 5,
     title: "UI/UX Design Fundamentals",
     description:
-      "Understand the principles of design and user experience to create beautiful and usable interfaces.",
+      "Understand the principles of design and user experience .",
     img: "https://example.com/images/ui-ux-course.jpg",
   },
   {

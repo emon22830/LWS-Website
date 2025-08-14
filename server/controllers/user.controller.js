@@ -68,13 +68,13 @@ export const login = async(req,res)=>{
         if(!isPassword){
             return res.status(400).json({
                 success:false,
-                message:"incrrect Email or Password"
+                message:"incorrect Email or Password"
             })
         }
 
         //generate
-        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expires: "1d"})
-        return res.cookie('token', token, {httpOnly:true, samSite: 'strict', maxAge: 1*24*60*100}).json({
+        const token = jwt.sign({userId:user._id}, process.env.SECRET_KEY, {expiresIn: "1d"})
+        return res.cookie('token', token, {httpOnly:true, samSite: 'strict', maxAge: 1*24*60*1000}).json({
             message: `Welcome back ${user.name}`,
             success: true,
             user
@@ -85,8 +85,31 @@ export const login = async(req,res)=>{
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Failed to register"
+            message: "Failed to Login"
         })
+    }
+}
+
+
+
+
+//Logout Section
+
+export const logout = async(_req,res)=>{
+    try {
+        return res.status(200).cookie("token","",{maxAge:0}).json({
+            message:"Logged out Successfully",
+            success: true
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Failed to Logout"
+        })
+        
+        
     }
 }
 

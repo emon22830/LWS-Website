@@ -3,8 +3,11 @@ import { Input,} from "@/components/ui/input";
 import { Label } from '@radix-ui/react-label';
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Button } from '@/components/ui/button';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { toast } from 'sonner';
+import axios from "axios";
+
 
 const Signup = () => {
   const[user, setUser] = useState({
@@ -22,10 +25,32 @@ const Signup = () => {
     }));
   };
 
-
+  const navigate = useNavigate(); 
   const handleSubmit = async (e) =>{
-    e.preventDefault(),
+    e.preventDefault();
     console.log(user)
+    try{
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/user/register", user, {
+          headers:{
+            "Content-Type":"application/json"
+          },
+          withCredentials: true
+        }
+      );
+
+      if(response.data.success){
+        navigate('/login')
+        toast.success(response.data.message);
+
+
+      } else {
+        toast.error("Something went wrong")
+      }
+
+    }catch(error){
+      console.log(error)
+    }
   }
 
     return (

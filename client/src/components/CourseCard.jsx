@@ -14,9 +14,7 @@ const CourseCard = ({course}) => {
                     <p className='text-gray-600 mb-4'>{course.description}</p>
                     <Button>Learn More</Button>
                 </div>
-
             </Card>
-            
         </div>
     );
 };
